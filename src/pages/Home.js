@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import SongCard from '../components/SongCard';
 import { Grid, Container, makeStyles, Typography } from '@material-ui/core';
-import SongPlayer from '../components/SongPlayer';
-import PlayerBar from '../components/PlayerBar';
+import { SongPlayer } from '../components/SongPlayer'; 
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -17,9 +16,7 @@ const Home = ({ songs }) => {
   const [songUrl, setSongUrl] = useState(null);
 
   const handlePlay = (downloadUrl) => {
-    // Set the song URL to play
     setSongUrl(downloadUrl);
-    // Set the currently playing song ID
     setCurrentlyPlaying(downloadUrl);
   };
 
@@ -38,8 +35,12 @@ const Home = ({ songs }) => {
           </Grid>
         )}
       </Grid>
-      {/* Render the SongPlayer component with songUrl and PlayerBar */}
-      {songUrl && <SongPlayer songUrl={songUrl} playerBar={<PlayerBar url={songUrl} />} />}
+      {songUrl && (
+        <SongPlayer
+          songUrl={songUrl}
+          
+        />
+      )}
     </Container>
   );
 };
