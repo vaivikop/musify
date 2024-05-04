@@ -24,12 +24,12 @@ const SongCard = ({ song, onPlay }) => {
   const classes = useStyles();
 
   const handlePlay = () => {
-    onPlay(song.id);
+    onPlay(song.id, song.downloadUrl[0].url);
   };
 
   return (
-    <Card className={classes.card}>
-      <CardActionArea onClick={handlePlay}>
+    <Card className={classes.card} onClick={handlePlay}>
+      <CardActionArea>
         <CardMedia
           className={classes.media}
           component="img"
@@ -50,18 +50,6 @@ const SongCard = ({ song, onPlay }) => {
           <Typography variant="body2" color="textSecondary" component="p">
             Artist: {song.artists.primary[0]?.name || ''}
           </Typography>
-          {/* Add more details if this song is currently playing */}
-          {song.isPlaying && (
-            <div>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Year: {song.year}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Duration: {song.duration} seconds
-              </Typography>
-              {/* Add more details as needed */}
-            </div>
-          )}
         </CardContent>
       </CardActionArea>
     </Card>

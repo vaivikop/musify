@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import SongCard from '../components/SongCard';
 import { Grid, Container, makeStyles, Typography } from '@material-ui/core';
-import { SongPlayer } from '../components/SongPlayer';
-import Trending from '../components/Trending'; // Import the Trending component
+import { SongPlayer } from '../components/SongPlayer'; 
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -11,21 +10,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = ({ songs }) => {
+const SearchResults = ({ songs }) => {
   const classes = useStyles();
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const [songUrl, setSongUrl] = useState(null);
 
   const handlePlay = (downloadUrl) => {
     setSongUrl(downloadUrl);
+    setCurrentlyPlaying(downloadUrl);
   };
 
   return (
     <Container className={classes.container}>
-      {/* Render the Trending component */}
-      <Trending songs={songs} onPlay={handlePlay} />
-      <br />
-      <br />
-
       <Grid container spacing={3}>
         {songs && songs.length > 0 ? (
           songs.map((song) => (
@@ -35,18 +31,18 @@ const Home = ({ songs }) => {
           ))
         ) : (
           <Grid item xs={12}>
-            <Typography variant="body1"></Typography>
+            <Typography variant="body1">No songs found</Typography>
           </Grid>
         )}
       </Grid>
       {songUrl && (
         <SongPlayer
           songUrl={songUrl}
-          // Add other props as needed
+          
         />
       )}
     </Container>
   );
 };
 
-export default Home;
+export default SearchResults;
