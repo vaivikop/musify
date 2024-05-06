@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+       /* Custom CSS */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.navbar {
+    background-color: #000000;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #1DB954;
+}
+
+footer {
+    color: #ffffff;
+}
+
+#searchSection {
+    font-size: 2.5rem;
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.search-bar {
+    position: relative;
+    max-width: 500px;
+}
+
+.search-input {
+    width: calc(100% - 40px);
+    padding: 10px 30px 10px 12px;
+    border: none;
+    border-radius: 20px;
+    background-color: #222;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-icon {
+    color: #1DB954;
+    font-size: 1.2rem;
+}
+
+.card {
+      background-color: #222222;
+      color: #ffffff;
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card-title {
+      font-size: 1.5rem;
+    }
+    .card-text {
+      font-size: 1rem;
+    }
+.audio-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #222222;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px -2px 10px rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+    }
+    .audio-player-controls {
+      display: flex;
+      align-items: center;
+    }
+    .audio-player-controls button {
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .audio-player-progress {
+      flex-grow: 1;
+      background-color: #393939;
+      height: 5px;
+      margin: 0 10px;
+      position: relative;
+      cursor: pointer;
+    }
+    .audio-player-progress-bar {
+      height: 100%;
+      background-color: #1DB954;
+      width: 0%;
+    }
+    .audio-player-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+    .audio-player-info span {
+      font-size: 0.8rem;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Music Streaming App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Genres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Library</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Authenticate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+<main class="container mt-5">
+    <section id="searchSection">
+        <div class="search-bar">
+            <form id="searchForm">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class="fas fa-search search-icon"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <div id="searchResults" class="row">
+          <!-- Featured songs will be added dynamically here -->
+        </div>
+      </div>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="audio-player-info">
+            <span id="currentSong">Song Title - Artist</span>
+        </div>
+        <div class="audio-player-controls">
+            <button id="prevButton"><i class="fas fa-backward"></i></button>
+            <button id="playButton"><i class="fas fa-play"></i></button>
+            <button id="nextButton"><i class="fas fa-forward"></i></button>
+            <button id="repeatButton"><i class="fas fa-redo-alt"></i></button>
+            <button id="shuffleButton"><i class="fas fa-random"></i></button>
+            <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100">
+        </div>
+        <div class="audio-player-progress" id="progressBar">
+            <div class="audio-player-progress-bar"></div>
+        </div>
+    </div>
+</main>
+
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <!-- Footer content here -->
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (Optional if you need Bootstrap functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <!-- Your custom JavaScript file -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    let songs = []; // Define songs globally
+
+    // Function to fetch songs based on the search query
+    function fetchSongs(query) {
+        fetch(`https://vaivikmusic.vercel.app/api/search/songs?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                songs = data.data.results; // Assign data to songs variable
+                const featuredSongsElement = document.getElementById('searchResults');
+                featuredSongsElement.innerHTML = ''; // Clear previous search results
+                songs.forEach((song, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'col-lg-4 col-md-6 col-sm-12';
+                    card.innerHTML = `
+                        <div class="card" data-song-index="${index}">
+                            <img src="${song.image[2].url}" class="card-img-top" alt="${song.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${song.name}</h5>
+                                <p class="card-text">${song.artists.primary.map(artist => artist.name).join(', ')}</p>
+                            </div>
+                        </div>`;
+                    featuredSongsElement.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    // Audio Player Controls
+    let audioPlayer;
+    let currentIndex = 0;
+    let isPlaying = false;
+    let isRepeat = false;
+    let isShuffle = false;
+
+    document.addEventListener('click', function(event) {
+        const card = event.target.closest('.card');
+        if (card) {
+            const index = parseInt(card.getAttribute('data-song-index'));
+            playSong(index);
+        }
+    });
+
+    const playButton = document.getElementById('playButton');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const repeatButton = document.getElementById('repeatButton');
+    const shuffleButton = document.getElementById('shuffleButton');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const progressBar = document.querySelector('.audio-player-progress-bar');
+    const durationElement = document.getElementById('duration');
+
+    playButton.addEventListener('click', togglePlay);
+    prevButton.addEventListener('click', playPrevious);
+    nextButton.addEventListener('click', playNext);
+    repeatButton.addEventListener('click', toggleRepeat);
+    shuffleButton.addEventListener('click', toggleShuffle);
+    volumeSlider.addEventListener('input', setVolume);
+
+    function togglePlay() {
+        if (isPlaying) {
+            audioPlayer.pause();
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+            audioPlayer.play();
+            playButton.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    function playPrevious() {
+        currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+        playSong(currentIndex);
+    }
+
+    function playNext() {
+        currentIndex = (currentIndex + 1) % songs.length;
+        playSong(currentIndex);
+    }
+
+    function playSong(index) {
+        if (audioPlayer) {
+            audioPlayer.pause();
+            document.body.removeChild(audioPlayer);
+        }
+        const song = songs[index];
+        audioPlayer = new Audio(song.downloadUrl[0].url);
+        audioPlayer.controls = true;
+        audioPlayer.addEventListener('ended', function() {
+            if (isRepeat) {
+                playSong(currentIndex);
+            } else if (isShuffle) {
+                const randomIndex = Math.floor(Math.random() * songs.length);
+                playSong(randomIndex);
+            } else {
+                playNext();
+            }
+        });
+        audioPlayer.addEventListener('timeupdate', updateProgressBar);
+        document.body.appendChild(audioPlayer);
+        audioPlayer.play();
+        currentIndex = index;
+        isPlaying = true;
+        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+        updateSongInfo(song);
+    }
+
+    function updateProgressBar() {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.style.width = `${progress}%`;
+        const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+        const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+        const durationMinutes = Math.floor(audioPlayer.duration / 60);
+        const durationSeconds = Math.floor(audioPlayer.duration % 60);
+        durationElement.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds} / ${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
+    }
+
+    function setVolume() {
+        audioPlayer.volume = volumeSlider.value / 100;
+    }
+
+    function updateSongInfo(song) {
+        const currentSongElement = document.getElementById('currentSong');
+        currentSongElement.textContent = `${song.name} - ${song.artists.primary.map(artist => artist.name).join(', ')}`;
+    }
+
+    function toggleRepeat() {
+        isRepeat = !isRepeat;
+        repeatButton.classList.toggle('active', isRepeat);
+        if (isRepeat) {
+            isShuffle = false;
+            shuffleButton.classList.remove('active');
+        }
+    }
+
+    function toggleShuffle() {
+        isShuffle = !isShuffle;
+        shuffleButton.classList.toggle('active', isShuffle);
+        if (isShuffle) {
+            isRepeat = false;
+            repeatButton.classList.remove('active');
+        }
+    }
+
+    // Search form event listener
+    const searchForm = document.getElementById('searchForm');
+    const searchResultsSection = document.getElementById('searchResults');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const searchInput = document.getElementById('searchInput').value;
+        fetchSongs(searchInput); // Fetch songs based on search query
+    });
+});
+
+    </script>
+    
+</body>
+</html>
